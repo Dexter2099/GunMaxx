@@ -1,0 +1,11 @@
+; Engine configuration file.
+; Minimal Godot 4 project scaffold for GunMaxx (no gameplay systems yet).
+
+config_version=5
+
+[application]
+config/name="GunMaxx"
+run/main_scene="res://scenes/Main.tscn"
+
+[rendering]
+renderer/rendering_method="mobile"
