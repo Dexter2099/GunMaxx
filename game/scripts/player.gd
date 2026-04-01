@@ -5,6 +5,7 @@ signal health_changed(current: int, max_value: int)
 
 @export var move_speed: float = 260.0
 @export var fire_cooldown: float = 0.2
+@export var rapid_fire_cooldown_multiplier: float = 0.5
 @export var bullet_spawn_distance: float = 30.0
 @export var max_health: int = 5
 
@@ -13,6 +14,7 @@ const BULLET_SCENE := preload("res://scenes/Bullet.tscn")
 var fire_cooldown_left: float = 0.0
 var health: int
 var is_dead: bool = false
+var rapid_fire_active: bool = false
 
 func _ready() -> void:
 	add_to_group("player")
@@ -44,7 +46,7 @@ func _physics_process(delta: float) -> void:
 
 	if Input.is_action_just_pressed("shoot") and fire_cooldown_left <= 0.0:
 		fire_bullet(aim_direction)
-		fire_cooldown_left = fire_cooldown
+		fire_cooldown_left = _get_current_fire_cooldown()
 
 func fire_bullet(aim_direction: Vector2) -> void:
 	if aim_direction == Vector2.ZERO:
@@ -70,6 +72,20 @@ func heal(amount: int) -> void:
 
 	health = min(health + amount, max_health)
 	health_changed.emit(health, max_health)
+
+func apply_rapid_fire_buff() -> void:
+	rapid_fire_active = true
+
+func remove_rapid_fire_buff() -> void:
+	rapid_fire_active = false
+
+func has_rapid_fire_buff() -> bool:
+	return rapid_fire_active
+
+func _get_current_fire_cooldown() -> float:
+	if rapid_fire_active:
+		return fire_cooldown * rapid_fire_cooldown_multiplier
+	return fire_cooldown
 
 func get_health() -> int:
 	return health
