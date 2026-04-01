@@ -4,6 +4,8 @@ signal room_cleared
 
 @export var enemy_scene: PackedScene
 @export var spawn_count: int = 3
+@export var ranged_enemy_scene: PackedScene
+@export var ranged_spawn_count: int = 1
 @export var spawn_points_root: NodePath = ^"SpawnPoints"
 @export var enemy_container_path: NodePath = ^"../Enemies"
 
@@ -25,18 +27,13 @@ func start_encounter() -> void:
 	else:
 		print("[RoomController] spawn_points_root resolved: %s" % spawn_points_node.get_path())
 
-	if enemy_scene == null:
-		push_error("[RoomController] enemy_scene is not assigned")
-	else:
-		print("[RoomController] enemy_scene assigned: %s" % enemy_scene.resource_path)
-
 	var enemy_container := get_node_or_null(enemy_container_path)
 	if enemy_container == null:
 		push_error("[RoomController] enemy container not found at path: %s" % enemy_container_path)
 	else:
 		print("[RoomController] enemy container resolved: %s" % enemy_container.get_path())
 
-	if spawn_points_node == null or enemy_scene == null or enemy_container == null:
+	if spawn_points_node == null or enemy_container == null:
 		print("[RoomController] Aborting encounter start due to missing dependencies")
 		return
 
@@ -46,15 +43,23 @@ func start_encounter() -> void:
 			spawn_points.append(child)
 	print("[RoomController] spawn points found: %d" % spawn_points.size())
 
-	if spawn_points.is_empty() or spawn_count <= 0:
-		print("[RoomController] no spawning required (spawn_count=%d)" % spawn_count)
+	var spawn_scenes: Array[PackedScene] = []
+	for i in range(spawn_count):
+		if enemy_scene != null:
+			spawn_scenes.append(enemy_scene)
+	for i in range(ranged_spawn_count):
+		if ranged_enemy_scene != null:
+			spawn_scenes.append(ranged_enemy_scene)
+
+	if spawn_scenes.is_empty() or spawn_points.is_empty():
+		print("[RoomController] no spawning required (melee=%d, ranged=%d)" % [spawn_count, ranged_spawn_count])
 		_check_room_cleared()
 		return
 
-	var enemies_to_spawn: int = min(spawn_count, spawn_points.size())
+	var enemies_to_spawn: int = min(spawn_scenes.size(), spawn_points.size())
 	var spawned_count := 0
 	for i in range(enemies_to_spawn):
-		var enemy := enemy_scene.instantiate() as Node2D
+		var enemy := spawn_scenes[i].instantiate() as Node2D
 		if enemy == null:
 			push_error("[RoomController] Failed to instantiate enemy at index %d" % i)
 			continue
