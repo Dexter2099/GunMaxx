@@ -62,14 +62,27 @@ position = Vector2(180, -160)
 [node name="SpawnPointC" type="Marker2D" parent="RoomController/SpawnPoints"]
 position = Vector2(180, 160)
 
-[node name="RoomClearLabel" type="Label" parent="."]
-visible = false
-offset_left = 430.0
-offset_top = 24.0
-offset_right = 595.0
-offset_bottom = 55.0
-theme_override_font_sizes/font_size = 28
-text = "ROOM CLEARED"
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="MarginContainer" type="MarginContainer" parent="HUD"]
+offset_left = 16.0
+offset_top = 12.0
+offset_right = 316.0
+offset_bottom = 56.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="HealthLabel" type="Label" parent="HUD/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "HP: 5/5"
+
+[node name="RoomStateLabel" type="Label" parent="HUD/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "FIGHT"
 
 [node name="RoomClearTimer" type="Timer" parent="."]
 wait_time = 1.5

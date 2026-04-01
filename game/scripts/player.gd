@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 signal died
+signal health_changed(current: int, max_value: int)
 
 @export var move_speed: float = 260.0
 @export var fire_cooldown: float = 0.2
@@ -16,6 +17,7 @@ var is_dead: bool = false
 func _ready() -> void:
 	add_to_group("player")
 	health = max_health
+	health_changed.emit(health, max_health)
 
 func _physics_process(delta: float) -> void:
 	if is_dead:
@@ -58,8 +60,15 @@ func take_damage(amount: int) -> void:
 		return
 
 	health = max(health - amount, 0)
+	health_changed.emit(health, max_health)
 	if health == 0:
 		die()
+
+func get_health() -> int:
+	return health
+
+func get_max_health() -> int:
+	return max_health
 
 func die() -> void:
 	if is_dead:
