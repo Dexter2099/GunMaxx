@@ -4,7 +4,7 @@ signal died
 
 @export var move_speed: float = 260.0
 @export var fire_cooldown: float = 0.2
-@export var bullet_spawn_distance: float = 24.0
+@export var bullet_spawn_distance: float = 30.0
 @export var max_health: int = 5
 
 const BULLET_SCENE := preload("res://scenes/Bullet.tscn")
@@ -50,7 +50,7 @@ func fire_bullet(aim_direction: Vector2) -> void:
 
 	var bullet := BULLET_SCENE.instantiate()
 	var spawn_position := global_position + aim_direction * bullet_spawn_distance
-	bullet.setup(spawn_position, aim_direction)
+	bullet.setup(spawn_position, aim_direction, self)
 	get_tree().current_scene.add_child(bullet)
 
 func take_damage(amount: int) -> void:
