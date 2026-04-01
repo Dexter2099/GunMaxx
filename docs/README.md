@@ -30,7 +30,7 @@
 2. Hit **MVP** criteria in `MVP.md` with a fixed, finite room set and two enemy archetypes.
 3. Avoid scope creep; prefer **cuts** over parallel systems.
 
-## Planned ML angle (not MVP)
+## Planned ML angle 
 
 After manual tuning works: **offline adaptive difficulty / pacing** — selecting among designer-bounded parameter presets from session signals. No reinforcement learning in the shipping hot path, no LLM content, no “smart AI” as a marketing substitute for hand-tuned enemies.
 
