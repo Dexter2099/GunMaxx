@@ -49,10 +49,7 @@ shape = SubResource("RectangleShape2D_right")
 
 [node name="RoomController" type="Node2D" parent="."]
 script = ExtResource("3_7p3cl")
-enemy_scene = ExtResource("4_y1j6q")
-spawn_count = 2
-ranged_enemy_scene = ExtResource("5_wm2r9")
-ranged_spawn_count = 1
+enemy_scenes = Array[PackedScene]([ExtResource("4_y1j6q"), ExtResource("5_wm2r9"), ExtResource("4_y1j6q")])
 
 [node name="SpawnPoints" type="Node2D" parent="RoomController"]
 

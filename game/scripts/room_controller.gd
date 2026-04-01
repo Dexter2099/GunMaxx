@@ -2,10 +2,7 @@ extends Node2D
 
 signal room_cleared
 
-@export var enemy_scene: PackedScene
-@export var spawn_count: int = 3
-@export var ranged_enemy_scene: PackedScene
-@export var ranged_spawn_count: int = 1
+@export var enemy_scenes: Array[PackedScene] = []
 @export var spawn_points_root: NodePath = ^"SpawnPoints"
 @export var enemy_container_path: NodePath = ^"../Enemies"
 
@@ -43,23 +40,20 @@ func start_encounter() -> void:
 			spawn_points.append(child)
 	print("[RoomController] spawn points found: %d" % spawn_points.size())
 
-	var spawn_scenes: Array[PackedScene] = []
-	for i in range(spawn_count):
-		if enemy_scene != null:
-			spawn_scenes.append(enemy_scene)
-	for i in range(ranged_spawn_count):
-		if ranged_enemy_scene != null:
-			spawn_scenes.append(ranged_enemy_scene)
-
-	if spawn_scenes.is_empty() or spawn_points.is_empty():
-		print("[RoomController] no spawning required (melee=%d, ranged=%d)" % [spawn_count, ranged_spawn_count])
+	if enemy_scenes.is_empty() or spawn_points.is_empty():
+		print("[RoomController] no spawning required (enemy_scenes=%d, spawn_points=%d)" % [enemy_scenes.size(), spawn_points.size()])
 		_check_room_cleared()
 		return
 
-	var enemies_to_spawn: int = min(spawn_scenes.size(), spawn_points.size())
+	var enemies_to_spawn: int = min(enemy_scenes.size(), spawn_points.size())
 	var spawned_count := 0
 	for i in range(enemies_to_spawn):
-		var enemy := spawn_scenes[i].instantiate() as Node2D
+		var spawn_scene := enemy_scenes[i]
+		if spawn_scene == null:
+			push_warning("[RoomController] Skipping null enemy scene at index %d" % i)
+			continue
+
+		var enemy := spawn_scene.instantiate() as Node2D
 		if enemy == null:
 			push_error("[RoomController] Failed to instantiate enemy at index %d" % i)
 			continue
