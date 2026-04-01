@@ -44,7 +44,9 @@ shape = SubResource("RectangleShape2D_right")
 
 [node name="Player" parent="." instance=ExtResource("1_hx3m3")]
 
-[node name="RoomController" type="Node" parent="."]
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="RoomController" type="Node2D" parent="."]
 script = ExtResource("3_7p3cl")
 enemy_scene = ExtResource("4_y1j6q")
 spawn_count = 3
