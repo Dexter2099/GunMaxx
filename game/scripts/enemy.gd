@@ -9,6 +9,7 @@ var player: Node2D
 var contact_damage_cooldown_left: float = 0.0
 
 func _ready() -> void:
+	add_to_group("enemies")
 	player = get_tree().get_first_node_in_group("player") as Node2D
 
 func _physics_process(delta: float) -> void:
