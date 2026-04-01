@@ -1,33 +1,43 @@
-# GunMaxx — MVP (First Shippable Prototype)
+# GunMaxx — MVP
 
-## Purpose
+## What the MVP is trying to prove
 
-Validate that **movement + shooting + room flow + one death-and-retry cycle** is fun before adding breadth. The MVP is a **vertical slice**, not a mini full game.
+The MVP should prove:
 
-## Included in MVP
+- **Room-to-room combat progression** works and stays readable.
+- **Multiple enemy pressure types** create real target-priority decisions.
+- **Temporary rewards between encounters** (pickups) change short-term play decisions.
+- **Obstacle/cover-shaped fights** create meaningful movement and sightline tradeoffs.
+- **Reusable room/level logic** can support future authored campaign content.
 
-- **Core combat** — Move, aim, shoot, reload or equivalent friction; health; basic enemy types (e.g. melee rusher, ranged grunt) kept to **two** distinct patterns.
-- **Room format** — Single-screen or small bounded arenas; **handcrafted** set of **8–12** rooms, reused in a simple sequence or light shuffle.
-- **Run container** — Start run → clear rooms in order (or fixed graph) → **boss or exit** as a single simple gate (can be a heavy enemy room, not a multi-phase boss).
-- **Fail and retry** — Death ends run; player returns to hub or menu; **one** meta currency or unlock (optional but recommended to test progression feel).
-- **Minimal UI** — Health, ammo or weapon indicator, pause, restart.
+## Explicitly not in MVP
 
-## Explicitly excluded from MVP
+- Full campaign content.
+- Story/lore development.
+- Broad hero roster.
+- Permanent upgrade trees.
+- Large procedural generation systems.
+- Advanced meta progression.
+- Polished cover mechanics (snapping, leaning, complex traversal interactions).
+- Broad biome/theme expansion.
 
-- Procedural generation beyond light room reorder or seed shuffle.
-- Narrative, cutscenes, dialogue, lore collectibles.
-- More than **two** enemy archetypes plus a simple “gate” encounter.
-- Shops, crafting, deep inventory, multiple characters.
-- Achievements, cloud saves, cosmetics, DLC hooks.
-- **Any** ML-driven systems (see `ML_PLAN.md` — after core loop works).
+## Current MVP focus
 
-## MVP success criteria
+The current MVP is moving from open arena combat toward **obstacle-shaped combat**.
 
-1. **60-second test** — A new player understands move, shoot, and why they died within one minute of play.
-2. **Retry hook** — After a death, starting again feels faster than quitting (low friction restart, readable failure).
-3. **Room clarity** — In any MVP room, the player can name what killed them without guessing.
-4. **Scope held** — MVP ships as a **finite** build (listed room count, fixed feature set), not an open-ended checklist.
+Room geometry should directly change:
+- movement routes,
+- line of sight,
+- and encounter pressure.
 
-## Principle
+## Near-term design priorities
 
-If something does not serve the first playable loop, it is **out** until post-MVP.
+1. Room obstacles / cover.
+2. Enemy behavior around obstacles.
+3. Line-of-sight combat pressure.
+4. Reusable room layout variants.
+5. Small authored level slices before any full campaign work.
+
+## Scope rule
+
+If a feature does not directly strengthen the proven MVP loop above, it is out of scope for now.
