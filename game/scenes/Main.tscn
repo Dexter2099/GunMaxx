@@ -7,40 +7,40 @@
 [ext_resource type="PackedScene" path="res://scenes/RangedEnemy.tscn" id="5_wm2r9"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_top"]
-size = Vector2(540, 12)
+size = Vector2(1560, 24)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bottom"]
-size = Vector2(540, 12)
+size = Vector2(1560, 24)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_left"]
-size = Vector2(12, 348)
+size = Vector2(24, 984)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_right"]
-size = Vector2(12, 348)
+size = Vector2(24, 984)
 
 [node name="Main" type="Node2D"]
 script = ExtResource("2_o6yxi")
 
 [node name="Floor" type="Polygon2D" parent="."]
 color = Color(0.117647, 0.133333, 0.172549, 1)
-polygon = PackedVector2Array(-512, -320, 512, -320, 512, 320, -512, 320)
+polygon = PackedVector2Array(-768, -480, 768, -480, 768, 480, -768, 480)
 
 [node name="RoomBounds" type="StaticBody2D" parent="."]
 
 [node name="TopWall" type="CollisionShape2D" parent="RoomBounds"]
-position = Vector2(0, -332)
+position = Vector2(0, -492)
 shape = SubResource("RectangleShape2D_top")
 
 [node name="BottomWall" type="CollisionShape2D" parent="RoomBounds"]
-position = Vector2(0, 332)
+position = Vector2(0, 492)
 shape = SubResource("RectangleShape2D_bottom")
 
 [node name="LeftWall" type="CollisionShape2D" parent="RoomBounds"]
-position = Vector2(-524, 0)
+position = Vector2(-780, 0)
 shape = SubResource("RectangleShape2D_left")
 
 [node name="RightWall" type="CollisionShape2D" parent="RoomBounds"]
-position = Vector2(524, 0)
+position = Vector2(780, 0)
 shape = SubResource("RectangleShape2D_right")
 
 [node name="Player" parent="." instance=ExtResource("1_hx3m3")]
