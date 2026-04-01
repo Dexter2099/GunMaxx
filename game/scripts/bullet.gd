@@ -22,7 +22,9 @@ func _physics_process(delta: float) -> void:
 	if lifetime_left <= 0.0:
 		queue_free()
 
-func _on_body_entered(_body: Node) -> void:
+func _on_body_entered(body: Node) -> void:
+	if body.has_method("die"):
+		body.call("die")
 	queue_free()
 
 func _on_area_entered(_area: Area2D) -> void:

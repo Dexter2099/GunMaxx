@@ -8,6 +8,9 @@ const BULLET_SCENE := preload("res://scenes/Bullet.tscn")
 
 var fire_cooldown_left: float = 0.0
 
+func _ready() -> void:
+	add_to_group("player")
+
 func _physics_process(delta: float) -> void:
 	var input_vector := Vector2(
 		Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left"),
