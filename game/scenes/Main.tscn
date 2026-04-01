@@ -84,6 +84,11 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "FIGHT"
 
+[node name="RoomCounterLabel" type="Label" parent="HUD/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "ROOM 1"
+
 [node name="RoomClearTimer" type="Timer" parent="."]
 wait_time = 1.5
 one_shot = true

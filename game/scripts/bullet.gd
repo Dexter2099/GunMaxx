@@ -9,6 +9,7 @@ var shooter: Node2D = null
 
 func _ready() -> void:
 	lifetime_left = max_lifetime
+	add_to_group("player_projectiles")
 	body_entered.connect(_on_body_entered)
 	area_entered.connect(_on_area_entered)
 
@@ -17,8 +18,6 @@ func setup(spawn_position: Vector2, travel_direction: Vector2, source: Node2D) -
 	direction = travel_direction.normalized()
 	rotation = direction.angle()
 	shooter = source
-	if shooter != null:
-		add_collision_exception_with(shooter)
 
 func _physics_process(delta: float) -> void:
 	global_position += direction * speed * delta

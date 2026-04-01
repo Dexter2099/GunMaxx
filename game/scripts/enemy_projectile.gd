@@ -10,6 +10,7 @@ var shooter: Node2D = null
 
 func _ready() -> void:
 	lifetime_left = max_lifetime
+	add_to_group("enemy_projectiles")
 	body_entered.connect(_on_body_entered)
 	area_entered.connect(_on_area_entered)
 

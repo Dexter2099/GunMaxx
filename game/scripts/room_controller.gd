@@ -68,6 +68,25 @@ func start_encounter() -> void:
 
 	_check_room_cleared()
 
+func start_next_encounter() -> void:
+	_cleanup_previous_encounter()
+	start_encounter()
+
+func _cleanup_previous_encounter() -> void:
+	active_enemies.clear()
+
+	var enemy_container := get_node_or_null(enemy_container_path)
+	if enemy_container != null:
+		for enemy in enemy_container.get_children():
+			enemy.queue_free()
+
+	for projectile in get_tree().get_nodes_in_group("player_projectiles"):
+		projectile.queue_free()
+
+	for projectile in get_tree().get_nodes_in_group("enemy_projectiles"):
+		projectile.queue_free()
+
+
 func _register_enemy(enemy: Node2D) -> void:
 	if active_enemies.has(enemy):
 		return
