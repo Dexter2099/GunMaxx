@@ -3,7 +3,7 @@ extends CharacterBody2D
 @export var move_speed: float = 120.0
 @export var contact_damage: int = 1
 @export var contact_damage_interval: float = 0.4
-@export var contact_range: float = 28.0
+@export var contact_range: float = 40.0
 
 var player: Node2D
 var contact_damage_cooldown_left: float = 0.0
