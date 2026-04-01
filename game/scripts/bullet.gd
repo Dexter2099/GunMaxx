@@ -17,6 +17,8 @@ func setup(spawn_position: Vector2, travel_direction: Vector2, source: Node2D) -
 	direction = travel_direction.normalized()
 	rotation = direction.angle()
 	shooter = source
+	if shooter != null:
+		add_collision_exception_with(shooter)
 
 func _physics_process(delta: float) -> void:
 	global_position += direction * speed * delta
