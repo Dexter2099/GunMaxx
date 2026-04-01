@@ -45,3 +45,16 @@ shape = SubResource("RectangleShape2D_right")
 
 [node name="Enemy" parent="." instance=ExtResource("3_2xphw")]
 position = Vector2(260, 0)
+
+[node name="RoomClearLabel" type="Label" parent="."]
+visible = false
+offset_left = 430.0
+offset_top = 24.0
+offset_right = 595.0
+offset_bottom = 55.0
+theme_override_font_sizes/font_size = 28
+text = "ROOM CLEARED"
+
+[node name="RoomClearTimer" type="Timer" parent="."]
+wait_time = 1.5
+one_shot = true
