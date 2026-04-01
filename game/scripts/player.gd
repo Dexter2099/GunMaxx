@@ -64,6 +64,13 @@ func take_damage(amount: int) -> void:
 	if health == 0:
 		die()
 
+func heal(amount: int) -> void:
+	if amount <= 0 or is_dead:
+		return
+
+	health = min(health + amount, max_health)
+	health_changed.emit(health, max_health)
+
 func get_health() -> int:
 	return health
 

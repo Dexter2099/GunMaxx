@@ -11,10 +11,12 @@ extends Node2D
 const ROOM_SIZE := Vector2(1536, 960)
 const CHASER_ENEMY_SCENE := preload("res://scenes/Enemy.tscn")
 const TURRET_ENEMY_SCENE := preload("res://scenes/RangedEnemy.tscn")
+const HEALTH_PICKUP_SCENE := preload("res://scenes/HealthPickup.tscn")
 
 var is_restarting: bool = false
 var room_cleared: bool = false
 var room_number: int = 1
+var active_health_pickup: Area2D = null
 
 func _ready() -> void:
 	var half := ROOM_SIZE * 0.5
@@ -46,6 +48,8 @@ func on_room_cleared() -> void:
 
 	room_cleared = true
 	_set_room_state_text(true)
+	if _spawn_health_pickup_if_needed():
+		return
 	room_clear_timer.start()
 
 func _on_player_died() -> void:
@@ -59,6 +63,7 @@ func start_next_room() -> void:
 	if is_restarting:
 		return
 
+	_clear_active_health_pickup()
 	room_number += 1
 	room_cleared = false
 	_set_room_state_text(false)
@@ -70,11 +75,45 @@ func start_next_room() -> void:
 	else:
 		room_controller.start_encounter()
 
+func _spawn_health_pickup_if_needed() -> bool:
+	if not player.has_method("get_health") or not player.has_method("get_max_health"):
+		return false
+
+	if player.get_health() >= player.get_max_health():
+		return false
+
+	var pickup := HEALTH_PICKUP_SCENE.instantiate() as Area2D
+	if pickup == null:
+		return false
+
+	pickup.global_position = Vector2(0, -36)
+	add_child(pickup)
+	active_health_pickup = pickup
+	if pickup.has_signal("collected"):
+		pickup.collected.connect(_on_health_pickup_collected)
+	pickup.tree_exited.connect(_on_health_pickup_tree_exited.bind(pickup))
+	return true
+
+func _on_health_pickup_collected() -> void:
+	if is_restarting or not room_cleared:
+		return
+	room_clear_timer.start()
+
+func _on_health_pickup_tree_exited(pickup: Area2D) -> void:
+	if active_health_pickup == pickup:
+		active_health_pickup = null
+
+func _clear_active_health_pickup() -> void:
+	if active_health_pickup != null and is_instance_valid(active_health_pickup):
+		active_health_pickup.queue_free()
+	active_health_pickup = null
+
 func restart_room() -> void:
 	if is_restarting:
 		return
 
 	is_restarting = true
+	_clear_active_health_pickup()
 	get_tree().reload_current_scene()
 
 func _set_room_state_text(cleared: bool) -> void:
