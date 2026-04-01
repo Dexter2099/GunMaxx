@@ -29,8 +29,8 @@ func start_encounter() -> void:
 		_check_room_cleared()
 		return
 
-	var enemies_to_spawn := min(spawn_count, spawn_points.size())
-	for i in enemies_to_spawn:
+	var enemies_to_spawn: int = min(spawn_count, spawn_points.size())
+	for i in range(enemies_to_spawn):
 		var enemy := enemy_scene.instantiate() as Node2D
 		if enemy == null:
 			continue
