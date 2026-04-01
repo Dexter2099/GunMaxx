@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+signal died
+
 @export var move_speed: float = 120.0
 @export var contact_damage: int = 1
 @export var contact_damage_interval: float = 0.4
@@ -7,6 +9,7 @@ extends CharacterBody2D
 
 var player: Node2D
 var contact_damage_cooldown_left: float = 0.0
+var is_dead: bool = false
 
 func _ready() -> void:
 	add_to_group("enemies")
@@ -46,4 +49,9 @@ func try_contact_damage() -> void:
 		contact_damage_cooldown_left = contact_damage_interval
 
 func die() -> void:
+	if is_dead:
+		return
+
+	is_dead = true
+	died.emit()
 	queue_free()

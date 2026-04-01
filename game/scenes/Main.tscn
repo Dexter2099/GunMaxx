@@ -2,7 +2,8 @@
 
 [ext_resource type="PackedScene" path="res://scenes/Player.tscn" id="1_hx3m3"]
 [ext_resource type="Script" path="res://scripts/main.gd" id="2_o6yxi"]
-[ext_resource type="PackedScene" path="res://scenes/Enemy.tscn" id="3_2xphw"]
+[ext_resource type="Script" path="res://scripts/room_controller.gd" id="3_7p3cl"]
+[ext_resource type="PackedScene" path="res://scenes/Enemy.tscn" id="4_y1j6q"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_top"]
 size = Vector2(540, 12)
@@ -43,8 +44,21 @@ shape = SubResource("RectangleShape2D_right")
 
 [node name="Player" parent="." instance=ExtResource("1_hx3m3")]
 
-[node name="Enemy" parent="." instance=ExtResource("3_2xphw")]
+[node name="RoomController" type="Node" parent="."]
+script = ExtResource("3_7p3cl")
+enemy_scene = ExtResource("4_y1j6q")
+spawn_count = 3
+
+[node name="SpawnPoints" type="Node2D" parent="RoomController"]
+
+[node name="SpawnPointA" type="Marker2D" parent="RoomController/SpawnPoints"]
 position = Vector2(260, 0)
+
+[node name="SpawnPointB" type="Marker2D" parent="RoomController/SpawnPoints"]
+position = Vector2(180, -160)
+
+[node name="SpawnPointC" type="Marker2D" parent="RoomController/SpawnPoints"]
+position = Vector2(180, 160)
 
 [node name="RoomClearLabel" type="Label" parent="."]
 visible = false
