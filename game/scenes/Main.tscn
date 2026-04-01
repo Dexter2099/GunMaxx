@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://6ihg6c80aqa8"]
+[gd_scene load_steps=15 format=3 uid="uid://6ihg6c80aqa8"]
 
 [ext_resource type="PackedScene" path="res://scenes/Player.tscn" id="1_hx3m3"]
 [ext_resource type="Script" path="res://scripts/main.gd" id="2_o6yxi"]
@@ -17,6 +17,15 @@ size = Vector2(24, 984)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_right"]
 size = Vector2(24, 984)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_obstacle_left"]
+size = Vector2(88, 128)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_obstacle_center"]
+size = Vector2(220, 44)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_obstacle_right"]
+size = Vector2(88, 128)
 
 [node name="Main" type="Node2D"]
 script = ExtResource("2_o6yxi")
@@ -42,6 +51,38 @@ shape = SubResource("RectangleShape2D_left")
 [node name="RightWall" type="CollisionShape2D" parent="RoomBounds"]
 position = Vector2(780, 0)
 shape = SubResource("RectangleShape2D_right")
+
+[node name="Obstacles" type="Node2D" parent="."]
+
+[node name="LeftPillar" type="StaticBody2D" parent="Obstacles"]
+position = Vector2(-220, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Obstacles/LeftPillar"]
+shape = SubResource("RectangleShape2D_obstacle_left")
+
+[node name="Body" type="Polygon2D" parent="Obstacles/LeftPillar"]
+color = Color(0.278431, 0.298039, 0.360784, 1)
+polygon = PackedVector2Array(-44, -64, 44, -64, 44, 64, -44, 64)
+
+[node name="CenterWall" type="StaticBody2D" parent="Obstacles"]
+position = Vector2(0, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Obstacles/CenterWall"]
+shape = SubResource("RectangleShape2D_obstacle_center")
+
+[node name="Body" type="Polygon2D" parent="Obstacles/CenterWall"]
+color = Color(0.34902, 0.372549, 0.431373, 1)
+polygon = PackedVector2Array(-110, -22, 110, -22, 110, 22, -110, 22)
+
+[node name="RightPillar" type="StaticBody2D" parent="Obstacles"]
+position = Vector2(220, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Obstacles/RightPillar"]
+shape = SubResource("RectangleShape2D_obstacle_right")
+
+[node name="Body" type="Polygon2D" parent="Obstacles/RightPillar"]
+color = Color(0.278431, 0.298039, 0.360784, 1)
+polygon = PackedVector2Array(-44, -64, 44, -64, 44, 64, -44, 64)
 
 [node name="Player" parent="." instance=ExtResource("1_hx3m3")]
 
