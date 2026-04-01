@@ -44,6 +44,7 @@ func _ready() -> void:
 	_update_room_counter()
 	_set_buff_text("")
 	_set_room_encounter_composition(room_number)
+	_setup_chaser_navigation()
 
 func _on_player_health_changed(current: int, max_value: int) -> void:
 	health_label.text = "HP: %d/%d" % [current, max_value]
@@ -206,3 +207,36 @@ func _build_encounter_for_room(room_index: int) -> Array[PackedScene]:
 		return [CHASER_ENEMY_SCENE, CHASER_ENEMY_SCENE, TURRET_ENEMY_SCENE, TURRET_ENEMY_SCENE, CHASER_ENEMY_SCENE]
 
 	return [CHASER_ENEMY_SCENE, TURRET_ENEMY_SCENE, CHASER_ENEMY_SCENE, TURRET_ENEMY_SCENE, TURRET_ENEMY_SCENE]
+
+
+func _setup_chaser_navigation() -> void:
+	for child in $Navigation.get_children():
+		child.queue_free()
+
+	var region_rects := [
+		Rect2(-740.0, -460.0, 1480.0, 380.0),
+		Rect2(-740.0, 80.0, 1480.0, 380.0),
+		Rect2(-740.0, -80.0, 440.0, 160.0),
+		Rect2(300.0, -80.0, 440.0, 160.0),
+	]
+
+	for region_rect in region_rects:
+		$Navigation.add_child(_build_navigation_region(region_rect))
+
+
+func _build_navigation_region(region_rect: Rect2) -> NavigationRegion2D:
+	var navigation_region := NavigationRegion2D.new()
+	var navigation_polygon := NavigationPolygon.new()
+	var x0 := region_rect.position.x
+	var y0 := region_rect.position.y
+	var x1 := region_rect.position.x + region_rect.size.x
+	var y1 := region_rect.position.y + region_rect.size.y
+	navigation_polygon.add_outline(PackedVector2Array([
+		Vector2(x0, y0),
+		Vector2(x1, y0),
+		Vector2(x1, y1),
+		Vector2(x0, y1),
+	]))
+	navigation_polygon.make_polygons_from_outlines()
+	navigation_region.navigation_polygon = navigation_polygon
+	return navigation_region

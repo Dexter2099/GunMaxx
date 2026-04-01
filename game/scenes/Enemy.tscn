@@ -1,5 +1,6 @@
 [gd_scene load_steps=3 format=3]
 
+
 [ext_resource type="Script" path="res://scripts/enemy.gd" id="1_04xmu"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_c8c25"]
@@ -14,3 +15,7 @@ shape = SubResource("CircleShape2D_c8c25")
 [node name="Body" type="Polygon2D" parent="."]
 color = Color(1, 0.341176, 0.341176, 1)
 polygon = PackedVector2Array(-14, -14, 14, -14, 14, 14, -14, 14)
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+path_desired_distance = 8.0
+target_desired_distance = 12.0

@@ -86,6 +86,8 @@ polygon = PackedVector2Array(-44, -64, 44, -64, 44, 64, -44, 64)
 
 [node name="Player" parent="." instance=ExtResource("1_hx3m3")]
 
+[node name="Navigation" type="Node2D" parent="."]
+
 [node name="Enemies" type="Node2D" parent="."]
 
 [node name="RoomController" type="Node2D" parent="."]

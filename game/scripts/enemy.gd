@@ -8,6 +8,7 @@ signal died
 @export var contact_range: float = 40.0
 
 var player: Node2D
+@onready var navigation_agent: NavigationAgent2D = $NavigationAgent2D
 var contact_damage_cooldown_left: float = 0.0
 var is_dead: bool = false
 
@@ -25,9 +26,11 @@ func _physics_process(delta: float) -> void:
 		move_and_slide()
 		return
 
-	var to_player := player.global_position - global_position
-	if to_player.length() > 1.0:
-		velocity = to_player.normalized() * move_speed
+	navigation_agent.target_position = player.global_position
+	var next_path_position := navigation_agent.get_next_path_position()
+	var to_next := next_path_position - global_position
+	if to_next.length() > 1.0:
+		velocity = to_next.normalized() * move_speed
 	else:
 		velocity = Vector2.ZERO
 
