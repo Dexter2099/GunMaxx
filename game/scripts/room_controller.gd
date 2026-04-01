@@ -38,6 +38,7 @@ func start_encounter() -> void:
 	for child in spawn_points_node.get_children():
 		if child is Node2D:
 			spawn_points.append(child)
+	spawn_points.sort_custom(func(a: Node2D, b: Node2D) -> bool: return a.name < b.name)
 	print("[RoomController] spawn points found: %d" % spawn_points.size())
 
 	if enemy_scenes.is_empty() or spawn_points.is_empty():
@@ -46,6 +47,8 @@ func start_encounter() -> void:
 		return
 
 	var enemies_to_spawn: int = min(enemy_scenes.size(), spawn_points.size())
+	if enemy_scenes.size() > spawn_points.size():
+		push_warning("[RoomController] Encounter requests %d enemies, but only %d spawn points exist" % [enemy_scenes.size(), spawn_points.size()])
 	var spawned_count := 0
 	for i in range(enemies_to_spawn):
 		var spawn_scene := enemy_scenes[i]

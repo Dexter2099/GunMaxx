@@ -62,6 +62,15 @@ position = Vector2(180, -160)
 [node name="SpawnPointC" type="Marker2D" parent="RoomController/SpawnPoints"]
 position = Vector2(180, 160)
 
+[node name="SpawnPointD" type="Marker2D" parent="RoomController/SpawnPoints"]
+position = Vector2(-260, 0)
+
+[node name="SpawnPointE" type="Marker2D" parent="RoomController/SpawnPoints"]
+position = Vector2(-180, -160)
+
+[node name="SpawnPointF" type="Marker2D" parent="RoomController/SpawnPoints"]
+position = Vector2(-180, 160)
+
 [node name="HUD" type="CanvasLayer" parent="."]
 
 [node name="MarginContainer" type="MarginContainer" parent="HUD"]
