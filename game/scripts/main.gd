@@ -8,7 +8,7 @@ extends Node2D
 @onready var room_counter_label: Label = $HUD/MarginContainer/HBoxContainer/RoomCounterLabel
 @onready var room_clear_timer: Timer = $RoomClearTimer
 
-const ROOM_SIZE := Vector2(1024, 640)
+const ROOM_SIZE := Vector2(1536, 960)
 const CHASER_ENEMY_SCENE := preload("res://scenes/Enemy.tscn")
 const TURRET_ENEMY_SCENE := preload("res://scenes/RangedEnemy.tscn")
 
