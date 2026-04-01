@@ -9,6 +9,8 @@ extends Node2D
 @onready var room_clear_timer: Timer = $RoomClearTimer
 
 const ROOM_SIZE := Vector2(1024, 640)
+const CHASER_ENEMY_SCENE := preload("res://scenes/Enemy.tscn")
+const TURRET_ENEMY_SCENE := preload("res://scenes/RangedEnemy.tscn")
 
 var is_restarting: bool = false
 var room_cleared: bool = false
@@ -33,6 +35,7 @@ func _ready() -> void:
 		_on_player_health_changed(player.get_health(), player.get_max_health())
 	_set_room_state_text(false)
 	_update_room_counter()
+	_set_room_encounter_composition(room_number)
 
 func _on_player_health_changed(current: int, max_value: int) -> void:
 	health_label.text = "HP: %d/%d" % [current, max_value]
@@ -60,6 +63,7 @@ func start_next_room() -> void:
 	room_cleared = false
 	_set_room_state_text(false)
 	_update_room_counter()
+	_set_room_encounter_composition(room_number)
 
 	if room_controller.has_method("start_next_encounter"):
 		room_controller.start_next_encounter()
@@ -78,3 +82,17 @@ func _set_room_state_text(cleared: bool) -> void:
 
 func _update_room_counter() -> void:
 	room_counter_label.text = "ROOM %d" % room_number
+
+func _set_room_encounter_composition(room_index: int) -> void:
+	if room_controller == null:
+		return
+
+	room_controller.enemy_scenes = _build_encounter_for_room(room_index)
+
+func _build_encounter_for_room(room_index: int) -> Array[PackedScene]:
+	if room_index <= 1:
+		return [CHASER_ENEMY_SCENE, TURRET_ENEMY_SCENE, CHASER_ENEMY_SCENE]
+	if room_index == 2:
+		return [CHASER_ENEMY_SCENE, TURRET_ENEMY_SCENE, TURRET_ENEMY_SCENE]
+
+	return [TURRET_ENEMY_SCENE, CHASER_ENEMY_SCENE, TURRET_ENEMY_SCENE]
